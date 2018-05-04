@@ -63,6 +63,8 @@
         <Compile Include="Effects\ColorOverlayEffect.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="FlexButton.cs" />
+        <Compile Include="Effects\MaxLinesPlatformEffect.cs" />
+        <Compile Include="Effects\LineBreakModePlatformEffect.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Include="packages.config" />

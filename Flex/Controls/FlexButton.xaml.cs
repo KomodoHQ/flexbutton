@@ -6,6 +6,7 @@ using Flex.Extensions;
 using Xamarin.Forms;
 using System.ComponentModel;
 using Xamarin.Forms.Xaml;
+using System.Linq;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Flex.Controls
@@ -150,6 +151,20 @@ namespace Flex.Controls
             set => SetValue(PaddingProperty, value);
         }
 
+		public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(FlexButton), LineBreakMode.WordWrap);
+        public LineBreakMode LineBreakMode
+        {
+            get => (LineBreakMode)GetValue(LineBreakModeProperty);
+            set => SetValue(LineBreakModeProperty, value);
+        }
+
+        public static readonly BindableProperty MaxLinesProperty = BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(FlexButton), 99999);
+        public int MaxLines
+        {
+            get => (int)GetValue(MaxLinesProperty);
+            set => SetValue(MaxLinesProperty, value);
+        }
+
         #endregion
 
         #region Commands
@@ -219,7 +234,25 @@ namespace Flex.Controls
                 ButtonIcon.Source = Icon;
                 ColorIcon(ForegroundColor);
             }
-            if (propertyName == IsToggledProperty.PropertyName)
+			else if (propertyName == MaxLinesProperty.PropertyName)
+            {
+                MaxLinesEffect effect = ButtonText.Effects.OfType<MaxLinesEffect>().FirstOrDefault();
+
+                if (effect != null)
+                {
+                    effect.MaxLines = MaxLines;
+                }
+            }
+            else if (propertyName == LineBreakModeProperty.PropertyName)
+            {
+                LineBreakModeEffect effect = ButtonText.Effects.OfType<LineBreakModeEffect>().FirstOrDefault();
+
+                if (effect != null)
+                {
+                    effect.LineBreakMode = LineBreakMode;
+                }
+            } 
+			else if (propertyName == IsToggledProperty.PropertyName)
             {
                 if (ToggleMode)
                 {

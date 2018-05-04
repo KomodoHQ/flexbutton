@@ -4,6 +4,7 @@
     x:Class="Flex.Controls.FlexButton"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:e="clr-namespace:Flex.Effects"
     xmlns:extensions="clr-namespace:Flex.Extensions"
     BackgroundColor="Transparent"
     VerticalOptions="Center">
@@ -59,12 +60,16 @@
                         VerticalTextAlignment="Center"
                         HorizontalOptions="FillAndExpand"
                         HorizontalTextAlignment="Center"
-                        TextColor="{Binding Source={x:Reference this}, Path=ForegroundColor}" >
+                        TextColor="{Binding Source={x:Reference this}, Path=ForegroundColor}">
                         <Label.Margin>
                             <OnPlatform x:TypeArguments="Thickness" Default="10,0">
                                 <On Platform="WinPhone" Value="0,0" />
                             </OnPlatform>
                         </Label.Margin>
+                        <Label.Effects>
+                            <e:LineBreakModeEffect />
+                            <e:MaxLinesEffect />
+                        </Label.Effects>
                     </Label>
                 </Grid>
             </ContentView>
