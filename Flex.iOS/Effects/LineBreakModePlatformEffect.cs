@@ -20,7 +20,7 @@ namespace Flex.iOS.Effects
             }
             if (Control is UILabel nativeLabel)
             {
-				switch (maxLinesEffect.LineBreakMode)
+				switch (effect.LineBreakMode)
                 {
                     case LineBreakMode.TailTruncation:
 						nativeLabel.LineBreakMode = UILineBreakMode.TailTruncation;
@@ -40,7 +40,7 @@ namespace Flex.iOS.Effects
 					case LineBreakMode.WordWrap:
                         nativeLabel.LineBreakMode = UILineBreakMode.WordWrap;
                         break;
-                    default;
+					default:
 						nativeLabel.LineBreakMode = UILineBreakMode.Clip    ;
                         break;
                 }

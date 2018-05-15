@@ -14,6 +14,8 @@ namespace Flex.Controls
     public partial class FlexButton : ContentView
     {
         ButtonMode mode;
+		ToggleMode toggleMode;
+
         bool userChangedPadding;
 
         #region Bindable Properties
@@ -128,10 +130,10 @@ namespace Flex.Controls
 
         // Toggle Properties
 
-        public static readonly BindableProperty ToggleModeProperty = BindableProperty.Create(nameof(ToggleMode), typeof(bool), typeof(FlexButton), false);
-        public bool ToggleMode
+		public static readonly BindableProperty ToggleModeProperty = BindableProperty.Create(nameof(ToggleMode), typeof(ToggleMode), typeof(FlexButton), ToggleMode.None);
+        public ToggleMode ToggleMode
         {
-            get => (bool)GetValue(ToggleModeProperty);
+			get => (ToggleMode)GetValue(ToggleModeProperty);
             set => SetValue(ToggleModeProperty, value);
         }
 
@@ -169,14 +171,14 @@ namespace Flex.Controls
 
         #region Commands
 
-        public static readonly BindableProperty ClickedCommandProperty = BindableProperty.Create(nameof(ClickedCommand), typeof(ICommand), typeof(FlexButton), null, propertyChanged: (bindable, oldValue, newValue) => ((FlexButton)bindable).OnClickOrTouchedDownCommandPropertyChanged());
+        public static readonly BindableProperty ClickedCommandProperty = BindableProperty.Create(nameof(ClickedCommand), typeof(ICommand), typeof(FlexButton), null);
         public ICommand ClickedCommand
         {
             get => (ICommand)GetValue(ClickedCommandProperty);
             set => SetValue(ClickedCommandProperty, value);
         }
 
-        public static readonly BindableProperty ClickedCommandParameterProperty = BindableProperty.Create(nameof(ClickedCommandParameter), typeof(object), typeof(FlexButton), null, propertyChanged: (bindable, oldValue, newValie) => ((FlexButton)bindable).CommandCanExecuteChanged(bindable, EventArgs.Empty));
+        public static readonly BindableProperty ClickedCommandParameterProperty = BindableProperty.Create(nameof(ClickedCommandParameter), typeof(object), typeof(FlexButton), null);
         public object ClickedCommandParameter
         {
             get => GetValue(ClickedCommandParameterProperty);
@@ -190,7 +192,7 @@ namespace Flex.Controls
             set { SetValue(TouchedDownCommandProperty, value); }
         }
 
-        public static readonly BindableProperty TouchedDownCommandParameterProperty = BindableProperty.Create(nameof(TouchedDownCommandParameter), typeof(object), typeof(FlexButton), null, propertyChanged: (bindable, oldValue, newValie) => ((FlexButton)bindable).CommandCanExecuteChanged(bindable, EventArgs.Empty));
+        public static readonly BindableProperty TouchedDownCommandParameterProperty = BindableProperty.Create(nameof(TouchedDownCommandParameter), typeof(object), typeof(FlexButton), null);
         public object TouchedDownCommandParameter
         {
             get => GetValue(TouchedDownCommandParameterProperty);
@@ -204,7 +206,7 @@ namespace Flex.Controls
             set => SetValue(TouchedUpCommandProperty, value);
         }
 
-        public static readonly BindableProperty TouchedUpCommandParameterProperty = BindableProperty.Create(nameof(TouchedUpCommandParameter), typeof(object), typeof(FlexButton), null, propertyChanged: (bindable, oldValue, newValie) => ((FlexButton)bindable).CommandCanExecuteChanged(bindable, EventArgs.Empty));
+        public static readonly BindableProperty TouchedUpCommandParameterProperty = BindableProperty.Create(nameof(TouchedUpCommandParameter), typeof(object), typeof(FlexButton), null);
         public object TouchedUpCommandParameter
         {
             get => GetValue(TouchedUpCommandParameterProperty);
@@ -254,7 +256,7 @@ namespace Flex.Controls
             } 
 			else if (propertyName == IsToggledProperty.PropertyName)
             {
-                if (ToggleMode)
+                if (ToggleMode > 0)
                 {
                     Highlight(IsToggled);
                 }
@@ -273,39 +275,6 @@ namespace Flex.Controls
             base.OnPropertyChanged(propertyName);
         }
 
-        void OnClickOrTouchedDownCommandPropertyChanged()
-        {
-            if (ClickedCommand != null)
-                ClickedCommand.CanExecuteChanged += CommandCanExecuteChanged;
-
-            if (TouchedDownCommand != null)
-                TouchedDownCommand.CanExecuteChanged += CommandCanExecuteChanged;
-
-            CommandCanExecuteChanged(this, EventArgs.Empty);
-        }
-
-        void CommandCanExecuteChanged(object sender, EventArgs e)
-        {
-            // Define IsEnabled state
-            var canExecuteClick = ClickedCommand?.CanExecute(ClickedCommandParameter);
-            var canExecuteTouchedDown = TouchedDownCommand?.CanExecute(TouchedDownCommandParameter);
-
-            if (canExecuteClick != null && canExecuteTouchedDown != null)
-                IsEnabled = canExecuteClick == true && canExecuteTouchedDown == true;
-            else
-                IsEnabled = canExecuteClick == true || canExecuteTouchedDown == true;
-        }
-
-        protected override void OnPropertyChanging([CallerMemberName] string propertyName = null)
-        {
-            // Unsubscribe from command events when Command changes
-            if (propertyName == ClickedCommandProperty.PropertyName && ClickedCommand != null)
-                ClickedCommand.CanExecuteChanged -= CommandCanExecuteChanged;
-            if (propertyName == TouchedDownCommandProperty.PropertyName && TouchedDownCommandProperty != null)
-                TouchedDownCommand.CanExecuteChanged -= CommandCanExecuteChanged;
-
-            base.OnPropertyChanging(propertyName);
-        }
 
         #endregion
 
@@ -425,7 +394,7 @@ namespace Flex.Controls
 
             }
 
-            if (ToggleMode)
+            if (ToggleMode > 0)
             {
                 Highlight(IsToggled);
             }
@@ -446,7 +415,7 @@ namespace Flex.Controls
         public FlexButton()
         {
             InitializeComponent();
-
+            
             TouchRecognizer.TouchDown += TouchDown;
             TouchRecognizer.TouchUp += TouchUp;
             SizeChanged += FlexButton_SizeChanged;
@@ -470,28 +439,36 @@ namespace Flex.Controls
             }
         }
 
-        void TouchUp()
-        {
-            if (IsEnabled)
-            {
-                TouchedUp?.Invoke(this, null);
-                TouchedUpCommand?.Execute(TouchedUpCommandParameter);
-                Clicked?.Invoke(this, null);
-                ClickedCommand?.Execute(ClickedCommandParameter);
+		void TouchUp()
+		{
+			if (IsEnabled)
+			{
+				TouchedUp?.Invoke(this, null);
+				TouchedUpCommand?.Execute(TouchedUpCommandParameter);
+				Clicked?.Invoke(this, null);
+				ClickedCommand?.Execute(ClickedCommandParameter);
 
-                if (ToggleMode)
-                {
-                    IsToggled = !IsToggled;
-                    Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
+				if (ToggleMode == ToggleMode.None)
+				{
+					Highlight(false);
+				}
+				else
+				{
+					if (ToggleMode == ToggleMode.Check)
+					{
+						IsToggled = !IsToggled;
+					}
+					else
+					{
+						IsToggled = true;
+					}
+
+					Toggled?.Invoke(this, new ToggledEventArgs(IsToggled));
 
                     Highlight(IsToggled);
-                }
-                else
-                {
-                    Highlight(false);
-                }
-            }
-        }
+				}
+			}
+		}
 
         void ColorIcon(Color color)
         {

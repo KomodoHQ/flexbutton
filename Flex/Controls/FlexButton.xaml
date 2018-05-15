@@ -17,9 +17,9 @@
         HasShadow="false">
 
         <Frame.GestureRecognizers>
-                <extensions:TouchGestureRecognizer x:Name="TouchRecognizer" />
-            </Frame.GestureRecognizers>
-        
+            <extensions:TouchGestureRecognizer x:Name="TouchRecognizer" />
+        </Frame.GestureRecognizers>
+
         <Frame
             x:Name="Container"
             BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundColor}"

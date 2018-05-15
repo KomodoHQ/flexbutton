@@ -6,4 +6,11 @@
         TextOnly,
         IconWithText
     }
+
+    public enum ToggleMode
+	{
+        None = 0,
+        Check = 1,
+        Radio = 2
+	}
 }
