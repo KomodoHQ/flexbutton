@@ -11,30 +11,34 @@
 
     <Frame
         x:Name="Border"
-        BackgroundColor="{Binding Source={x:Reference this}, Path=BorderColor}"
+        BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundColor}"
         CornerRadius="{Binding Source={x:Reference this}, Path=CornerRadius}"
         Padding="{Binding Source={x:Reference this}, Path=BorderThickness}"
+        Margin="0"
+        OutlineColor="Transparent"
         HasShadow="false">
 
         <Frame.GestureRecognizers>
             <extensions:TouchGestureRecognizer x:Name="TouchRecognizer" />
         </Frame.GestureRecognizers>
 
-        <Frame
-            x:Name="Container"
-            BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundColor}"
-            CornerRadius="{Binding Source={x:Reference this}, Path=InnerCornerRadius}"
-            HasShadow="false"
-            Padding="0"
-            Margin="0">
-
+        
+        <Grid x:Name="Container" 
+              BackgroundColor="Transparent"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="FillAndExpand"
+              Margin="{Binding Source={x:Reference this}, Path=CornerRadius}" Padding="0">
+            
             <ContentView
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
 
                 <Grid 
                     x:Name="ContainerContent"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
                     Margin="{Binding Source={x:Reference this}, Path=Padding}" 
+                    Padding="0"
                     RowSpacing="0"
                     ColumnSpacing="0">
     
@@ -42,13 +46,7 @@
                         <ColumnDefinition x:Name="FirstColumn" Width="*" />
                         <ColumnDefinition x:Name="SecondColumn" Width="Auto" />
                     </Grid.ColumnDefinitions>
-                
-                    <Image 
-                        x:Name="ButtonIcon"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        Source="{Binding Source={x:Reference this}, Path=Icon}"/>
-
+                    
                     <Label
                         x:Name="ButtonText"
                         Grid.Column="1"
@@ -56,6 +54,7 @@
                         FontSize="{Binding Source={x:Reference this}, Path=FontSize}"
                         FontAttributes="{Binding Source={x:Reference this}, Path=FontAttributes}"
                         FontFamily="{Binding Source={x:Reference this}, Path=FontFamily}"
+                        LineBreakMode="MiddleTruncation"
                         VerticalOptions="Fill"
                         VerticalTextAlignment="Center"
                         HorizontalOptions="FillAndExpand"
@@ -73,7 +72,16 @@
                     </Label>
                 </Grid>
             </ContentView>
-        </Frame>
+
+            <Image 
+                x:Name="ButtonIcon"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                HeightRequest="20"
+                WidthRequest="20"
+                Source="{Binding Source={x:Reference this}, Path=Icon}" />
+        </Grid>
+        
     </Frame>
         <!--<Label
             x:Name="ButtonSubText"

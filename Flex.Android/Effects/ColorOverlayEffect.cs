@@ -10,7 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ResolutionGroupName("Flex.Effects")]
-[assembly: ExportEffect(typeof(ColorOverlayEffectAndroid), nameof(ColorOverlayEffect))]
+[assembly: ExportEffect(typeof(ColorOverlayEffectAndroid), uniqueName: nameof(ColorOverlayEffect))]
 namespace Flex.Android.Effects
 {
     public class ColorOverlayEffectAndroid : PlatformEffect

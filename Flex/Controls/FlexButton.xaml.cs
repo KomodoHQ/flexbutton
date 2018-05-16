@@ -233,7 +233,7 @@ namespace Flex.Controls
                 SetButtonMode();
 
                 // Make sure, that Icon Source is set manually, as Binding is too slow sometimes
-                ButtonIcon.Source = Icon;
+				ButtonIcon.Source = Icon;
                 ColorIcon(ForegroundColor);
             }
 			else if (propertyName == MaxLinesProperty.PropertyName)
@@ -299,7 +299,6 @@ namespace Flex.Controls
 
                     // Configure Container
                     ContainerContent.HorizontalOptions = LayoutOptions.Fill;
-                    Grid.SetColumnSpan(ButtonIcon, 2);
                     Grid.SetColumn(ButtonText, 1);
 
                     // Set Visibilities
@@ -323,16 +322,12 @@ namespace Flex.Controls
                         case IconOrientation.Left:
                             FirstColumn.Width = new GridLength(1, GridUnitType.Star);
                             SecondColumn.Width = GridLength.Auto;
-                            Grid.SetColumn(ButtonIcon, 0);
-                            Grid.SetColumnSpan(ButtonIcon, 1);
                             Grid.SetColumn(ButtonText, 1);
                             break;
 
                         case IconOrientation.Right:
                             FirstColumn.Width = GridLength.Auto;
                             SecondColumn.Width = new GridLength(1, GridUnitType.Star);
-                            Grid.SetColumn(ButtonIcon, 1);
-                            Grid.SetColumnSpan(ButtonIcon, 1);
                             Grid.SetColumn(ButtonText, 0);
                             break;
                     }
@@ -353,7 +348,7 @@ namespace Flex.Controls
 
                     // Configure Container
                     ContainerContent.HorizontalOptions = LayoutOptions.FillAndExpand;
-                    Grid.SetColumnSpan(ButtonIcon, 1);
+                    
                     Grid.SetColumnSpan(ButtonText, 2);
                     Grid.SetColumn(ButtonText, 0);
 
@@ -375,12 +370,12 @@ namespace Flex.Controls
             try
             {
 
-                Border.BackgroundColor = Color.Red;
-                Border.BackgroundColor = BorderColor;
+                //Border.BackgroundColor = Color.Red;
+                //Border.BackgroundColor = BorderColor;
                 Border.CornerRadius = CornerRadius;
                 Border.Padding = BorderThickness;
-                Container.BackgroundColor = BackgroundColor;
-                Container.CornerRadius = InnerCornerRadius;
+				Border.BackgroundColor = BackgroundColor;
+                //Container.CornerRadius = InnerCornerRadius;
                 ContainerContent.Margin = Padding;
                 ButtonText.Text = Text;
                 ButtonText.FontSize = FontSize;
@@ -402,7 +397,7 @@ namespace Flex.Controls
             // Calculate inner corner radius
             // Use the outer radius minus the max thickness of a single direction
             InnerCornerRadius = Math.Max(0, CornerRadius - (int)Math.Max(Math.Max(BorderThickness.Left, BorderThickness.Top), Math.Max(BorderThickness.Right, BorderThickness.Bottom)));
-            Container.CornerRadius = InnerCornerRadius;
+           // Container.CornerRadius = InnerCornerRadius;
 
             //ColorIcon(ForegroundColor);
         }
@@ -481,15 +476,15 @@ namespace Flex.Controls
         {
             if (isHighlighted)
             {
-                Border.BackgroundColor = HighlightBorderColor;
-                Container.BackgroundColor = HighlightBackgroundColor;
+                //Border.BackgroundColor = HighlightBorderColor;
+				Border.BackgroundColor = HighlightBackgroundColor;
                 ButtonText.TextColor = HighlightForegroundColor;
                 ColorIcon(HighlightForegroundColor);
             }
             else
             {
-                Border.BackgroundColor = BorderColor;
-                Container.BackgroundColor = BackgroundColor;
+                //Border.BackgroundColor = BorderColor;
+				Border.BackgroundColor = BackgroundColor;
                 ButtonText.TextColor = ForegroundColor;
                 ColorIcon(ForegroundColor);
             }

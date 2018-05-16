@@ -29,6 +29,7 @@ namespace Flex.Android.Effects
                 else if (maxLinesEffect.MaxLines == 1)
                 {
                     nativeTextView.SetSingleLine(true);
+					nativeTextView.SetMaxLines(1);
                 }
                 else if (maxLinesEffect.MaxLines > 1)
                 {

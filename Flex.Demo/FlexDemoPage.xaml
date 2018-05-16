@@ -191,23 +191,18 @@
                 BorderColor="#49516F"
                 HighlightBorderColor="#6279B8"/>
 
-                        <flex:FlexButton
-                HorizontalOptions="Center"
+                <flex:FlexButton
                 Text="Button with text only and different font family, attributes and size"
-                LineBreakMode="MiddleTruncation"
-                MaxLines="1"
-                FontAttributes="Bold"
-                FontFamily="TimesNewRomanPSMT"
-                Margin="20,0"
-                Padding="20"
-                FontSize="24"
-                ForegroundColor="#ffffff"
-                HighlightForegroundColor="#49516F"
-                BackgroundColor="#6279B8"
-                HighlightBackgroundColor="#8EA4D2"
-                BorderThickness="4"
-                BorderColor="#49516F"
-                HighlightBorderColor="#6279B8"/>
+                CornerRadius="4"
+                BackgroundColor="#F58423"
+                 HighlightBackgroundColor="#a85915"
+                 FontAttributes="Bold"
+                 BorderColor="Transparent"
+                 LineBreakMode="MiddleTruncation"
+                 MaxLines="1"
+                 BorderThickness="0"
+                 HeightRequest="45"
+                Padding="10,5"/>
             
                 <flex:FlexButton
                 HorizontalOptions="Center"
