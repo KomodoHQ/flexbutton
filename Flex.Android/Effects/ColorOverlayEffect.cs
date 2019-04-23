@@ -35,7 +35,13 @@ namespace Flex.Android.Effects
 
             try
             {
-                var drawable = ((ImageView)Control).Drawable.Mutate();
+                ImageView control = ((ImageView)Control);
+                if(control.Drawable == null)
+                {
+                    return;
+                }
+
+                var drawable = control.Drawable.Mutate();
                 drawable.SetColorFilter(color.ToAndroid(), PorterDuff.Mode.SrcAtop);
                 drawable.Alpha = color.ToAndroid().A;
 

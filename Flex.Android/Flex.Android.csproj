@@ -17,8 +17,7 @@
         <FileAlignment>512</FileAlignment>
         <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
         <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-        <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-        <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
         <NuGetPackageImportStamp>
         </NuGetPackageImportStamp>
         <PackageId>Forms.Controls.FlexButton</PackageId>
@@ -153,7 +152,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Flex\Flex.csproj">
-        <Project>{4FBE2794-BD54-4C5E-B95A-46B2D5606C5F}</Project>
+        <Project>{40206A0B-BEA6-4A01-883A-9E0820F97456}</Project>
         <Name>Flex</Name>
       </ProjectReference>
     </ItemGroup>
